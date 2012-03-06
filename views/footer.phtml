@@ -1,0 +1,109 @@
+</div>
+<footer class="footer">
+    <div class="site_center">
+        <div class="footer_left">
+            <figure class="footer_icon">
+                <img src="<?php echo ROOT; ?>img/client.png"/>
+            </figure>
+            <span class="footer_title"> Clientes </span>
+            <ul class="footer_ul">
+                <li>Porque a Clínica da Idade?</li>
+                <li>Acordos e convenções</li>
+                <li>Consultas e especialidades</li>
+                <li>Marcações</li>
+            </ul>
+        </div>
+        <div class="footer_center">
+            <figure class="footer_icon">
+                <img src="<?php echo ROOT; ?>img/clinic.png"/>
+            </figure>
+            <span class="footer_title"> A nossa clínica </span>
+            <ul class="footer_ul">
+                <li>As nossas Unidades</li>
+                <li>Os nossos Médicos</li>
+                <li>Fotografias da Clínica</li>
+                <li>Atendimento Geral</li>
+            </ul>
+        </div>
+        <div class="footer_right">
+            <p>Avenida Dão Afonso, 200</p>
+            <p>1500-423 Lisboa</p>
+            <p><span class="footer_green">email:</span> geral@clinicaidade.pt</p>
+            <p><span class="footer_green">tel:</span> <span class="footer_bigletter"> +351 219 443 123 </span></p>
+            <figure>
+                <img src="<?php echo ROOT; ?>img/logo_mini.png"/>
+            </figure>
+        </div>
+    </div>
+</footer>
+
+
+<!-- JavaScript at the bottom for fast page loading -->
+
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+<!-- scripts concatenated and minified via build script -->
+<script src="<?php echo ROOT; ?>js/plugins.js"></script>
+<script src="<?php echo ROOT; ?>js/script.js"></script>
+<!-- end scripts -->
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+     mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    
+</script>
+
+<script>
+    function pageload(hash) {
+		
+        if(hash) {
+//            alert(hash);
+            $.ajax({
+                type: "POST",
+                url: "<?php echo ROOT . '/control/functions.php'; ?>",
+                data: "action=menugrande&section="+hash
+            }).done(function( msg ) {
+                $('.entry_1').html(msg);
+                
+            });
+        } else {
+            $("entry_1").empty();
+        }
+    }
+    jQuery(document).ready(function($){ 
+     
+        $.historyInit(pageload);
+		
+//        $(".icon_field_link").click(function(){
+//            $(".entry_1").html('<img class="icon_field_loader" src="http://amiguinhodesign.com/clinicaidade/img/25.gif" alt="Wait" />');
+//            var hash = this.href;
+//            hash = hash.replace(/^.*#/, '');
+//            $.historyLoad(hash);
+//            return false;
+//        });
+        
+        $(window).hashchange( function(){
+            // Alerts every time the hash changes!
+            $(".entry_1").html('<img class="icon_field_loader" src="http://amiguinhodesign.com/clinicaidade/img/25.gif" />');
+            var hash = location.hash;
+            hash = hash.replace(/^.*#/, '');
+            if(hash == ""){
+                hash = "home"
+            }
+                pageload(hash)
+
+        })
+
+        // Trigger the event (useful on page load).
+        $(window).hashchange();
+
+    });
+</script>
+</body>
+</html>
